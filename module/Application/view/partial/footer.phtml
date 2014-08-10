@@ -1,0 +1,14 @@
+<footer class="footer">
+    <div class="container">
+        <h5>Metodos de pagamento disponiveis para anuncios em destaque e banners</h5>
+        <p>Publique o seu anúncio na hora, gratuitamente e sem necessidade de registo. Para um maior destaque ao seu anúncio pode optar pela opção paga.</p>
+        <p>O único método de pagamento disponível é a transferência bancária. registe-se ou envie um email atraves dos nossos <a href="#">contactos</a></p>
+        <hr class="soften"/>
+        <div class="footerMenu">
+            <?php foreach($this->menu()->getFooterMenu()  as $key => $option) : ?>
+                <a href="<?php echo $key; ?>"><?php echo $option['name']; ?></a><?php echo isset($option['separator']) ? '|' : '';?>
+            <?php endforeach;?>
+            <p class="pull-right"><a href="/termos">Termos e condições</a> &copy; Copyright 2014 sexoja.com </p>
+        </div>
+    </div>
+</footer>

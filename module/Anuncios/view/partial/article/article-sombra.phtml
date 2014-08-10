@@ -1,0 +1,30 @@
+<?php
+/**
+ * @var $sex \Anuncios\Entity\Sex
+ */
+$sex = $anuncio;
+$image = $sex->getImages()->first();
+if(empty($image)) {
+    $url = '';
+}else {
+    $url = $sex->getImages()->first()->getUrl();
+}
+?>
+<div class="span3">
+    <div class="indexItems">
+        <div class="indexItems">
+            <div class=" displayStyle">
+                <div class="itemBlock">
+                    <span class="indexItemsImageMask"></span>
+			<span class="itemBlockAction">
+				<a class="aniBtn" href="<?php echo $this->url('anuncios', array('action' => 'index', 'category' => $sex->getCategory()->getId()));?>" ><i class="icon-search"></i></a>
+				<a class="aniBtn" data-my-tooltip="tooltip" href="<?php echo $this->url('article', array('article' => $sex->getUrl())); ?>" data-original-title="Details"><i class="icon-link"></i></a>
+			</span>
+                    <a href="#" class="indexProductsImage">
+                        <img width="270px" height="270px" src="<?php echo $this->page()->getUrl('image',$url);?>" alt="<?php echo $sex->getTitle();?>" title="<?php echo $sex->getCategory()->getName();?>">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<section id="mainBody">
+    <div class="container">
+        <h3 class="title"><span><?php echo $this->title;?></span></h3>
+        <?php if($this->isEdit) : ?>
+            <input type="hidden" value="<?php echo $this->fkCidade?>" id="fkCidade"/>
+            <input type="hidden" value="<?php echo $this->fkCategoria?>" id="fkCategoria"/>
+        <?php endif;?>
+        <div class="well">
+            <?php
+            $this->form->setAttribute('action', $this->url('anunciar', array('action' => 'add')));
+            if($this->isEdit) {
+                $this->form->setAttribute('action', $this->url('anunciar', array('action' => 'editar', 'id' => $this->hash)));
+            }
+            $this->form->setAttribute('class', 'form-horizontal');
+            echo $this->ztbForm($this->form);?>
+            <p class="pull-right badge badge-important">[ * ] Campos obrigatorios</p>
+            <br/>
+        </div>
+    </div>
+</section>

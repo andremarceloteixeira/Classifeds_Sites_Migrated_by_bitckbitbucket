@@ -1,0 +1,13 @@
+<?php
+$threeFirst = array_slice($allDataCategory['sexs'], 0, 6);
+if(count($threeFirst) > 0) :?>
+    <h3 class="title"><span><?php echo $allDataCategory['name'];?></span></h3>
+    <ul class="thumbnails">
+        <?php foreach ($threeFirst as $anuncio) {
+            echo $this->partial('partial/article/generic', ['anuncio' => $anuncio]);
+        } ?>
+    </ul>
+<?php endif;?>
+<?php if(count($allDataCategory['sexs']) > 6) :?>
+<div class="cntr"><a class="btn" href="<?php echo $this->url('anuncios', array('action' => 'index', 'category' =>$allDataCategory['id']));?>">ver mais<i class="icon-repeat"></i></a><br><hr class="soften"></div>
+<?php endif;?>

@@ -1,0 +1,40 @@
+<section id="mainBody">
+<div class="container">
+<div class="row">
+<div id="sideBar" class="span3">
+
+    <h3 class="title"><span>EM DESTAQUE</span></h3>
+    <a class="btn btn-warning btn-large btn-block" href="
+    <?php echo $this->url('anunciar', array('action' => 'em-destaque')); ?>">ANUNCIO EM DESTAQUE</a>
+
+    <h3 class="title"><span>ONDE ?</span></h3>
+    <div>
+       <?php foreach ($cities as $city) {
+            echo $this->partial('partial/city', ['city' => $city->getName(), 'n' =>$city->getNumerOfSex(), 'id' =>$city->getId() ]);
+       } ?>
+    </div>
+    <?php echo $this->partial('partial/especial', ['especial' => $especial]);?>
+    <?php echo $this->partial('partial/novos',['sexs' => $sexs]);?>
+    <?php echo $this->partial('partial/populares', ['populares' => $populares]);?>
+    <?php echo $this->partial('partial/informacao');?>
+</div>
+<?php echo $this->partial('partial/categorias', ['allDataCategory' => $allDataCategory, 'destaques' => $destaques]);?>
+</div>
+</section>
+<!-- Login Block -->
+<div id="addnew" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="false" >
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Prende anunciar para essa cidade?</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal loginFrm">
+            <div class="control-group span5">
+                <a href="/anunciar/add">
+                    <span class="btn btn-large btn-danger">ADICIONAR NOVO ANUNCIO? - É GRATIUTO JÀ?</span>
+                </a>
+            </div>
+        </form>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Clique para fechar a janela</button>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<?php
+$threeFirst = array_slice($allDataCategory['sexs'], 0, 3);
+if(count($threeFirst) > 0) :?>
+    <h3 class="title"><span><?php echo $allDataCategory['name'];?></span></h3>
+    <div class="row">
+        <?php foreach ($threeFirst as $anuncio) {
+              echo $this->partial('partial/article/article-sombra', ['anuncio' => $anuncio]);
+        } ?>
+    </div>
+<?php endif;?>

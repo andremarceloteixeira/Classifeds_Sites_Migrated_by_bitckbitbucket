@@ -1,0 +1,11 @@
+<?php header('Content-Type: text/html; charset=ISO-8859-1'); ?>
+<?php echo $this->partial('partial/head'); ?>
+<?php echo $this->partial('partial/header'); ?>
+
+<div class="container">
+    <?php echo $this->ztbFlashMessenger()->render(); ?>
+    <?php echo $this->content; ?>
+</div>
+
+<?php echo $this->partial('partial/footer'); ?>
+<?php echo $this->partial('partial/foot'); ?>

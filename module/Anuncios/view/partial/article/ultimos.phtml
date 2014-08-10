@@ -1,0 +1,23 @@
+<?php
+/**
+ * @var $sex \Anuncios\Entity\Sex
+ */
+$sex = $anuncio;
+$image = $sex->getImages()->first();
+if(empty($image)) {
+    $url = '';
+}else {
+    $url = $sex->getImages()->first()->getUrl();
+}
+?>
+<div class="item <?php echo $i==0 ?  'active' : ''; ?>">
+    <div class="well">
+        <a class="displayStyle" href="<?php echo $this->url('article', array('article' => $sex->getUrl())); ?>"><img src="<?php echo $this->page()->getUrl('image', $url); ?>" alt="<?php echo $sex->getTitle();?>"/></a>
+        <h5><?php echo $sex->getTitle(); ?></h5>
+
+        <p>
+            <span><?php echo $this->page()->getDescription($sex->getDescription()); ?></span>
+        </p>
+        <p><a href="<?php echo $this->url('anuncios', array('action' => 'index', 'category' => $sex->getCategory()->getId()));?>"><span class="price"><?php echo $sex->getCategory()->getName(); ?></a></span></p>
+    </div>
+</div>

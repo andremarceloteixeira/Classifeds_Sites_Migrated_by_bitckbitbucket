@@ -1,0 +1,28 @@
+<?php if(count($populares) >0) :?>
+<h3 class="title"><span>POPULARES</span></h3>
+<ul class="thumbnails">
+    <?php
+    foreach ($populares as $anuncio) :
+        /**
+         * @var $sex \Anuncios\Entity\Sex
+         */
+        $sex = $anuncio;
+        $image = $sex->getImages()->first();
+        if (empty($image)) {
+            $url = '';
+        }else {
+            $url = $sex->getImages()->first()->getUrl();
+        }?>
+    <li class="span3">
+        <div class="thumbnail">
+            <img src="<?php echo $this->page()->getUrl('image',$url);?>" alt="<?php echo $sex->getTitle();?>">
+            <div class="caption">
+                <p>
+                    <a href="<?php echo $this->url('article', array('article' => $sex->getUrl())); ?>">ver detalhes</a>
+                </p>
+            </div>
+        </div>
+    </li>
+   <?php endforeach;?>
+</ul>
+<?php endif;?>

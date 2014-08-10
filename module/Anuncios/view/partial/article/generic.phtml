@@ -1,0 +1,27 @@
+<?php
+/**
+ * @var $sex \Anuncios\Entity\Sex
+ */
+$sex = $anuncio;
+$image = $sex->getImages()->first();
+if(empty($image)) {
+    $url = '';
+}else {
+    $url = $sex->getImages()->first()->getUrl();
+}
+?>
+<li class="span3">
+    <div class="thumbnail">
+        <img src="<?php echo $this->page()->getUrl('image', $url); ?>" alt="<?php echo $sex->getCategory()->getName(); ?>">
+        <div class="caption">
+            <h3><?php echo $sex->getTitle(); ?></h3>
+            <p class="detailNprice">
+                <span><?php echo $this->page()->getDescription($sex->getDescription()); ?></span>
+            </p>
+            <p>
+                <a class="btn btn-warning" href="<?php echo $this->url('contactar', array('action' => 'index', 'id' =>$sex->getId()));?>"> contactar <i class="icon-comment"></i></a>
+                <a class="btn" href="<?php echo $this->url('article', array('article' => $sex->getUrl())); ?>">ver informação</a>
+            </p>
+        </div>
+    </div>
+</li>

@@ -1,0 +1,15 @@
+<?php if(count($sexs)> 0):?>
+<h3 class="title"><span>ULTIMOS</span></h3>
+<div id="newCarousel" class="carousel slide">
+    <div class="carousel-inner">
+        <?php
+        $i = 0;
+        foreach ($sexs as $anuncio) {
+            echo $this->partial('partial/article/ultimos',['anuncio' => $anuncio, 'i' => $i]);
+            $i ++;
+        } ?>
+    </div>
+    <a class="left carousel-control" href="#newCarousel" data-slide="prev">‹</a>
+    <a class="right carousel-control" href="#newCarousel" data-slide="next">›</a>
+</div>
+<?php endif;?>
