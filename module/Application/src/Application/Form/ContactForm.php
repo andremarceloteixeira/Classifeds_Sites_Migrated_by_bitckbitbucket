@@ -86,7 +86,7 @@ class ContactForm extends GenericForm
                         'attributes' => array(
                             'value' => 'Envia Mensagem',
                             'id' => 'submitbutton',
-                            'class' => 'btn btn-primary'
+                            'class' => 'btn btn-primary btn-mini enviar-btn'
                         )
                 ));
         $this->addCsrf();

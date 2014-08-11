@@ -9,11 +9,11 @@ class PageHelper extends AbstractHelper
     const MARCAS_LINE = 2;
     public function __construct ($locator)
     {
-       $this->serviceLocator = $locator;
+        $this->serviceLocator = $locator;
     }
-    
+
     public function __invoke ()
-    {     
+    {
         return $this;
     }
 
@@ -23,11 +23,11 @@ class PageHelper extends AbstractHelper
         switch ($type)
         {
             case 'image' :
-                $url = $this->getHost() . '/data/uploads/'. $path ;
+                $url =  ROOT_PATH . '/public/data/uploads/'. $path ;
                 if ($r) {
-                    $url = $this->getHost() . '/data/uploads/resize/'. $path ;
+                    $url = ROOT_PATH . '/public/data/uploads/'. $path ;
                 }
-                $url = $this->imageExists($url) ? $url : $this->getHost() . '/data/uploads/placeholder.png';
+                $url = $this->imageExists($url)  && !empty($path) ?  $this->getHost() . '/data/uploads/resize/'. $path  : $this->getHost() . '/data/uploads/placeholder.png';
                 break;
             default :
                 $url = $this->getHost() . '/' .$path;
@@ -65,12 +65,24 @@ class PageHelper extends AbstractHelper
 
     private function imageExists($url)
     {
-        $url =  $this->getProtocol(). '://' .$url;
         if(!empty($url)) {
             if (file_exists($url)) {
-                return true;
+                if ($this->URLIsValid($url)) {
+                    return 1;
+                }
             }
         }
+        return false;
+    }
+
+    public function URLIsValid($url)
+    {
+        $fp = @fopen($url, "r");
+        if ($fp !== false) {
+            fclose($fp);
+            return true;
+        }
+
         return false;
     }
 
@@ -80,9 +92,9 @@ class PageHelper extends AbstractHelper
     }
 
 
-    public function getHost() 
+    public function getHost()
     {
-       return $this->getRequest()->getUri()->getHost(); 
+        return $this->getRequest()->getUri()->getHost();
     }
 
 
@@ -93,10 +105,10 @@ class PageHelper extends AbstractHelper
         }
         return substr($url, 0, $chars) . '...';
     }
-      
-    public function getProtocol() 
+
+    public function getProtocol()
     {
-       return $this->getRequest()->getUri()->getScheme(); 
+        return $this->getRequest()->getUri()->getScheme();
     }
 
 }

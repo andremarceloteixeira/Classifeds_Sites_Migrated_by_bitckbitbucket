@@ -18,3 +18,10 @@
 .searchButton {
     margin-top:0 !important;
 }
+.enviar-btn {
+    height: 43%;
+    max-width: 43%;
+}
+input {
+    height: auto;
+}
