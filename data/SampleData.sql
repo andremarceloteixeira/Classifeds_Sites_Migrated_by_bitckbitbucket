@@ -38,3 +38,6 @@ INSERT INTO `category` (`id`, `name`) VALUES
 --
 -- Dumping data for table `roles_parents`
 --
+--SET FOREIGN_KEY_CHECKS = 0;
+--TRUNCATE
+--SET FOREIGN_KEY_CHECKS = 1; -- enable checking

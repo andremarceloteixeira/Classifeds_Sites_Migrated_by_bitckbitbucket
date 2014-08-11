@@ -9,8 +9,11 @@
             <?php
             $this->form->setAttribute('action', $this->url('anunciar', array('action' => 'add')));
             if($this->isEdit) {
-                $this->form->setAttribute('action', $this->url('anunciar', array('action' => 'editar', 'id' => $this->hash)));
+                $this->form->setAttribute('action', $this->url('anunciar', array('action' => 'editar', 'id' => $this->id,  'hash' => $this->hash)));
             }
+            //$this->form->get('termosecondicoes')->
+            //    setValueOptions([0 =>
+            //        sprintf('%s requires that the element has an assigned name; none discovered', '<a href="http://www.w3schools.com">Visit W3Schools</a>')]);
             $this->form->setAttribute('class', 'form-horizontal');
             echo $this->ztbForm($this->form);?>
             <p class="pull-right badge badge-important">[ * ] Campos obrigatorios</p>

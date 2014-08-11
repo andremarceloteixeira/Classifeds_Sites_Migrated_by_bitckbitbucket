@@ -11,7 +11,8 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-
+use Application\Form\SearchForm;
+use Zend\ModuleManager\ModuleManager;
 class Module
 {
     public function onBootstrap(MvcEvent $e)

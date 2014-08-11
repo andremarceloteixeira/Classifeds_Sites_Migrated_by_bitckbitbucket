@@ -4,7 +4,7 @@
 <div id="sideBar" class="span3">
 
     <h3 class="title"><span>EM DESTAQUE</span></h3>
-    <a class="btn btn-warning btn-large btn-block" href="
+    <a class="btn btn-danger btn-large btn-block" href="
     <?php echo $this->url('anunciar', array('action' => 'em-destaque')); ?>">ANUNCIO EM DESTAQUE</a>
 
     <h3 class="title"><span>ONDE ?</span></h3>
@@ -13,12 +13,14 @@
             echo $this->partial('partial/city', ['city' => $city->getName(), 'n' =>$city->getNumerOfSex(), 'id' =>$city->getId() ]);
        } ?>
     </div>
-    <?php echo $this->partial('partial/especial', ['especial' => $especial]);?>
+    <?php //echo $this->partial('partial/especial', ['especial' => $especial]);?>
     <?php echo $this->partial('partial/novos',['sexs' => $sexs]);?>
-    <?php echo $this->partial('partial/populares', ['populares' => $populares]);?>
+    <?php //echo $this->partial('partial/populares', ['populares' => $populares]);?>
     <?php echo $this->partial('partial/informacao');?>
 </div>
-<?php echo $this->partial('partial/categorias', ['allDataCategory' => $allDataCategory, 'destaques' => $destaques]);?>
+<?php echo $this->partial('partial/categorias', ['allDataCategory' => $allDataCategory, 'destaques' => $destaques,
+    'title' => $title,
+    'searchCategory' => $searchCategory, 'listOfSexs' => $listOfSexs,  'paginator' =>$paginator, 'type' => $type]);?>
 </div>
 </section>
 <!-- Login Block -->

@@ -1,0 +1,41 @@
+<div class="row-fluid">
+<?php if($type) {
+    $param = $type['type'];
+    $current = $type['current'];
+}?>
+<?php if ($this->pageCount): ?>
+<div class="paginationControl pagination">
+<!-- Previous page link -->
+<ul class="pagination">
+<?php if (isset($this->previous)): ?>
+    <li>
+        <a href="<?php echo $this->url($this->route, array('page' => $this->previous,"$param" =>$current)); ?>">
+            « Anterior</a>
+    </li>
+<?php else: ?>
+   <li class="disabled"><a href="#">« Anterior</a></li>
+<?php endif; ?>
+
+<!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+    <li><a href="<?php echo $this->url($this->route, array('page' => $page, "$param" =>$current)); ?>">
+        <?php echo $page; ?>
+    </a></li>
+  <?php else: ?>
+        <li  class="disabled"><a href="#"> <?php echo $page; ?></a></li>
+  <?php endif; ?>
+<?php endforeach; ?>
+
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
+    <li><a href="<?php echo $this->url($this->route, array('page' => $this->next, "$param" =>$current)); ?>">
+    Seguinte »
+  </a></li>
+<?php else: ?>
+    <li class="disabled"><a href="#">Seguinte »</a></li>
+<?php endif; ?>
+</div>
+<?php endif; ?>
+</ul>
+</div>

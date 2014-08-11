@@ -8,12 +8,16 @@ use Anuncios\Form\AnuncioForm;
 use Anuncios\Model\AnunciosModel;
 use Anuncios\Model\ImageUpload;
 use Anuncios\Entity\Image as Images;
+// Pagination
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use Zend\Paginator\Paginator;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 class IndexController extends BaseController
 {
 
     const ANUNIOS_ENTITY = 'Anuncios\Entity\Anuncios';
     const IMAGE_ENTITY = 'Anuncios\Entity\Images';
-
 
     /***
      * All anuncios action
@@ -21,25 +25,67 @@ class IndexController extends BaseController
      */
     public function anunciosAction()
     {
+        $type = $paginator = $city = $category = $allDataCategory = $listOfSexs = null;
         $paramCities = false;
         $anunciosModel = new AnunciosModel();
-        /*repository = $this->getEntityManager()->getRepository('Anuncios\Entity\Sex');
-        $anuncios      = $repository->findAll(); */
-        /*if ($token = $this->params()->fromRoute('city')) {
-
-        } */
-
-
-
         $anunciosModel->setEntityManager($this->getEntityManager());
         $anunciosModel->setQueryBuilder($this->getEntityManager()->createQueryBuilder());
-        $allDataCategory = $anunciosModel->getAllAnuniosByCategory();
+        $title = $searchCategory = false;
+        if ($cityId = $this->params()->fromRoute('city')) {
+            $city = $anunciosModel->findCityById($cityId);
+            if (!is_null($city)) {
+                $type = ['type' => 'city', 'current' => $cityId];
+                $searchCategory = true;
+                $title = 'Resultados para '. '"'.$city->getName().'"';
+                $listOfSexs = $anunciosModel->getAllAnuniosByType($city->getId(), 'city');
+                if(count($listOfSexs) == 0) {
+                    $this->flashMessenger()->addInfoMessage(array(
+                        'message' => 'Não existem resultados',
+                        'title' => 'Informação:'
+                    ));
+                    return $this->redirect()->toUrl('/anuncios');
+                }
+            }
+        } elseif ($this->params()->fromRoute('category') || ($this->params()->fromQuery('searchSelect'))) {
+            $searchCategory = true;
+            $search = $this->params()->fromQuery('searchSelect');
+            if (!empty($search)) {
+                $id = $this->params()->fromQuery('searchSelect');
+            } else {
+                $id = $this->params()->fromRoute('category');
+            }
+            $type = ['type' => 'category', 'current' => $id];
+            switch($id) {
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    $category = $anunciosModel->findCategoryById($id);
+                    $title =     $title = 'Resultados para '. '"'.$category->getName().'"';
+                    $listOfSexs = $anunciosModel->getAllAnuniosByType($category->getId(), 'category');
+                    break;
+                default:
+                    $searchCategory = false;
+                    break;
+            }
+        }
+        if (empty($city) && empty($category)) {
+            $allDataCategory = $anunciosModel->getAllAnuniosByCategory();
+        } else {
+            $repository = $this->getEntityManager()->getRepository('Anuncios\Entity\Sex');
+            $adapter = new DoctrineAdapter(new ORMPaginator($listOfSexs));
+            // Create the paginator itself
+            $paginator = new Paginator($adapter);
+            $page = $this->params()->fromRoute('page', 1);
+            $paginator->setCurrentPageNumber((int) $page)
+                ->setItemCountPerPage(9);
+        }
         $sexs = $anunciosModel->extractAllSexs();
         $destaques = $anunciosModel->getSexsAllDestaques();
         $populares   = $anunciosModel->getPopulares();
         $especial   = $anunciosModel->getSpecial();
         $cities = $anunciosModel->getAllCitiesByCategoryType($paramCities);
-        $viewVariables = compact('anuncios', 'cities', 'allDataCategory', 'sexs', 'destaques', 'especial', 'populares');
+        $viewVariables = compact('type','anuncios', 'cities', 'allDataCategory', 'sexs', 'destaques', 'especial', 'populares', 'title', 'searchCategory', 'listOfSexs', 'paginator');
         $view = new ViewModel($viewVariables);
         $view->setTemplate('anuncios/index/anuncios');
         return $view;
@@ -73,7 +119,7 @@ class IndexController extends BaseController
      */
     public function editAction()
     {
-        $isEdit = $hash = false;
+        $id = $isEdit = $hash = false;
         $title = 'CRIAR UM ANUNCIO GRATIS';
         $fkCidade = $fkCategoria = false;
         $anuncios = new Sex();
@@ -81,10 +127,19 @@ class IndexController extends BaseController
         $anunciosModel->setEntityManager($this->getEntityManager());
         if ($token = $this->params()->fromRoute('id')) {
             $title = 'EDITAR O SEU ANUNCIO';
-            $hash = $token;
+            $id = $token;
             $isEdit = true;
-            $anuncios = $this->getEntityManager()->getRepository('Anuncios\Entity\Sex')->findOneBy(array('url' => $token));
-            if (is_null($anuncios)) {
+            $anuncios = $this->getEntityManager()->getRepository('Anuncios\Entity\Sex')->findOneBy(array('id' => $token));
+            if (!is_null($anuncios)) {
+                $hash = $anuncios->getUrl();
+                if(($this->params()->fromRoute('hash') != $hash)) {
+                    $this->flashMessenger()->addInfoMessage(array(
+                        'message' => 'O anuncio já não existe: Porque ocoreu algum erro, ou porque expirou!',
+                        'title' => 'Informação:'
+                    ));
+                    return $this->redirect()->toUrl('/anuncios');
+                }
+            } else {
                 $this->flashMessenger()->addInfoMessage(array(
                     'message' => 'O anuncio já não existe: Porque ocoreu algum erro, ou porque expirou!',
                     'title' => 'Informação:'
@@ -130,6 +185,14 @@ class IndexController extends BaseController
                             if(!isset($formData['id'])) {
                                 $em->persist($anuncios);
                             } else {
+                                if(isset($formData['removeImages'])) {
+                                    foreach($formData['removeImages'] as $image) {
+                                        //mais tarde remover a imagem do servidor!
+                                        $image = $this->getEntityManager()->getRepository('Anuncios\Entity\Image')->findOneBy(array('id' => $image));
+                                        $em->remove($image);
+                                        $em->flush();
+                                    }
+                                }
                                 $anunciosObj  = $this->getEntityManager()->getRepository('Anuncios\Entity\Sex')->findOneBy(array('id' => $formData['id']));
                                 /**
                                  * @var \Anuncios\Entity\Sex
@@ -140,6 +203,18 @@ class IndexController extends BaseController
                                 $em->merge($anuncios);
                             }
                             $em->flush();
+                            $anuncios->getId();
+                            // para oferecer os Destaque as 11 primeiros para setar a primeira pagina
+                            //Solução Linda!
+                            if (in_array($anuncios->getId(), [1,2,3])) {
+                                $anuncios->setType('DESTAQUE_GRANDE');
+                                $em->merge($anuncios);
+                                $em->flush();
+                            } elseif(in_array($anuncios->getId(), [4,5,6,7,8,9,10,11])) {
+                                $anuncios->setType('DESTAQUE_PEQUENO');
+                                $em->merge($anuncios);
+                                $em->flush();
+                            }
                             $imagesForSave = $imageUpload->getImageNamesForSave();
                             if (!empty($imagesForSave)) {
                                 foreach($imagesForSave as $url) {
@@ -161,9 +236,9 @@ class IndexController extends BaseController
                             }
                             //send email... to person!
                             if(!isset($formData['id'])) {
-                               $this->sendEmailCriacaoAnuncio($anuncios->getEmail(), $anuncios->getUrl());
+                               $this->sendEmailCriacaoAnuncio($anuncios->getEmail(), $anuncios->getUrl(), $anuncios->getId());
                                 $this->flashMessenger()->addSuccessMessage(array(
-                                    'message' => 'O seu anuncio foi publicado. Recebeu um email com a informação sobre o mesmo que lhe permite editar, e eliminar',
+                                    'message' => 'O seu anuncio foi publicado. Recebeu um email com a informação sobre o mesmo que lhe permite editar, entre outras informações.',
                                     'title' => 'Parabéns!',
                                     'titleTag' => 'h4',
                                     'isBlock' => true,
@@ -192,9 +267,9 @@ class IndexController extends BaseController
                 'message' => 'não foi possivel gravar o seu anuncio',
                 'title' => 'Erro:'
             ));
-            return $this->redirect()->toUrl('anuncios');
+            return $this->redirect()->toUrl('/anuncios');
         }
-        $viewVariables = compact('post', 'form', 'isEdit', 'fkCidade', 'fkCategoria', 'title', 'hash');
+        $viewVariables = compact('post', 'form', 'isEdit', 'fkCidade', 'fkCategoria', 'title', 'hash', 'id');
         $view = new ViewModel($viewVariables);
         $view->setTemplate('anuncios/index/edit');
         return $view;
@@ -214,20 +289,22 @@ class IndexController extends BaseController
         return $this->editAction();
     }
 
-    private function sendEmailCriacaoAnuncio($email, $hash)
+    private function sendEmailCriacaoAnuncio($email, $hash, $id)
     {
-        $editar = $this->getBaseUrl() . $this->url()->fromRoute('anunciar', array('action' => 'editar', 'id' => $hash));
+        $editar = $this->getBaseUrl() . $this->url()->fromRoute('anunciar', array('action' => 'editar', 'hash' => $hash, 'id' => $id));
         $remover = $this->getBaseUrl() . $this->url()->fromRoute('anunciar', array('action' => 'remover', 'id' => $hash));
         $registar = $this->getBaseUrl() . $this->url()->fromRoute('registar', array('action' => 'index'));
+        //                O link para remover o seu anuncio é: => %s
+        //
         try {
             $this->sendEmail(
                 $email,
                 $this->getTranslatorHelper()->translate('Obrigado por anunciar conosco....'),
                 sprintf($this->getTranslatorHelper()->translate('
                 O link para editar o seu anuncio é: => %s
-                O link para remover o seu anuncio é: => %s
-                Pode ainda efectuar um registo no site com o mesmo email de criacao do anuncio.
-                Registe-se aqui => %s '), $editar, $remover, $registar)
+                O codigo o seu anúncio é: => %s
+                Mais tarde será possivel efectuar um registo no site com o mesmo email de criacao do anuncio, e gerir todos os seus anuncios, tal como novas funcionaliadades. Aguarde-nos :)
+                Não se esqueça que pode destacar o seu anuncio. Para isso basta enviar um email com o codigo do seu anuncio e será fornecido um NIB. Após confirmação do pagamento  da opção escolhida o seu anuncio fica em destaque, nas proximas 24H.'), $editar, $hash)
 
             );
         } catch (\Zend\Mail\Protocol\Exception\RuntimeException $e) {

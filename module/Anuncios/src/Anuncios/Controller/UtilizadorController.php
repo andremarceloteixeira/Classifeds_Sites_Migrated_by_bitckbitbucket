@@ -9,10 +9,10 @@ class UtilizadorController extends BaseController
      * @deprecated
      * @return ViewModel
      */
-    public function registarAction()
+    /*public function registarAction()
     {
         $view = new ViewModel();
         $view->setTemplate('anuncios/utilizador/registo');
         return $view;
-    }
+    }*/
 }

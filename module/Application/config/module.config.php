@@ -40,6 +40,16 @@ return array(
                     ),
                 ),
             ),
+            'sendemail' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/sendemail',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'contactos',
+                    ),
+                ),
+            ),
             'termos' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(

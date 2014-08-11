@@ -1,0 +1,18 @@
+<section id="client">
+    <h3 class="title"><span>Marcas em destaque...</span></h3>
+    <div id="clients" class="carousel slide">
+        <div class="carousel-inner">
+            <?php for($i=0 ; $i < count($marcas); $i++) :?>
+            <div class="item <?php echo $i==0 ? 'active' : ''?>">
+                <div class="span12">
+                    <?php foreach($marcas[$i] as $marca):?>
+                    <img src="<?php echo $this->page()->getBannerUrl(''); ?>" alt="<?php echo $marca->getName();?>" />
+                    <?php endforeach;?>
+                </div>
+            </div>
+           <?php endfor;?>
+        </div>
+        <a class="left carousel-control" href="#clients" data-slide="prev">‹</a>
+        <a class="right carousel-control" href="#clients" data-slide="next">›</a>
+    </div>
+</section>

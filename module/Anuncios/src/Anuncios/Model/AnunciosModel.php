@@ -1,12 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mteixeira
- * Date: 8/7/14
- * Time: 9:57 AM
- */
 
 namespace Anuncios\Model;
+use Anuncios\Entity\Publicity;
 use Anuncios\Model\ConfigModel  as Config;
 use Doctrine\Common\Collections\ArrayCollection;
 use Anuncios\Entity\CitiesRange;
@@ -56,6 +51,16 @@ class AnunciosModel extends  GenericModel
         return $anuncios;
     }
 
+    public function findCategoryById($id)
+    {
+        return $this->getEntityManager()->find('Anuncios\Entity\Category', $id);
+    }
+
+    public function findCityById($id)
+    {
+        return $this->getEntityManager()->find('Anuncios\Entity\City', $id);
+    }
+
     public function getAllCitiesByCategoryType($categoryType = false)
     {
         $collection = $newRes = [];
@@ -79,15 +84,25 @@ class AnunciosModel extends  GenericModel
         return new ArrayCollection($collection);
     }
 
+    public function getAllCategories() {
+        $allCategories = $this->getEntityManager()->getRepository('Anuncios\Entity\Category')->findAll();
+        $newCategories = [];
+        foreach($allCategories as $category) {
+            $newCategories[$category->getId()] = $category->getName();
+
+        }
+        return $newCategories;
+    }
+
     /**
      * use keys : mulheresprocurandohomens ,mulheresprocurandomulheres, homensprocurandomulheres , homensprocurandohomens
      * @param bool $idCategory
      * @return array
      */
-    public function getAllAnuniosByCategory($idCategory = false, $limit = 1000000)
+    public function getAllAnuniosByCategory($type = false , $limit = 1000000)
     {
         $allCats = [];
-        if (!$idCategory) {
+        if (!$type) {
             $allCategories = $this->getEntityManager()->getRepository('Anuncios\Entity\Category')->findAll();
             array_shift($allCategories);
             foreach($allCategories as $category) {
@@ -95,19 +110,20 @@ class AnunciosModel extends  GenericModel
                 $allCats[strtolower(preg_replace('/\s+/', '', $category->getName()))] = [
                     'id' => $id,
                     'name' => $category->getName(),
-                    'sexs' => $this->getEntityManager()->createQuery("SELECT c FROM Anuncios\Entity\Sex c WHERE c.category = '$id' ORDER BY c.created DESC")
+                    'sexs' => $this->getEntityManager()->createQuery("SELECT c FROM Anuncios\Entity\Sex c WHERE c.category = '$id' AND c.expiration > CURRENT_DATE() ORDER BY c.created DESC")
                         ->setMaxResults($limit)->getResult()
                 ];
             }
            return $allCats;
         }
-        //filter articles by category ID
-
+       return false;
 
     }
 
     /**
-     * use keys : mulheresprocurandohomens ,mulheresprocurandomulheres, homensprocurandomulheres , homensprocurandohomens
+     *  use keys : mulheresprocurandohomens
+     * ,mulheresprocurandomulheres,
+     * homensprocurandomulheres , homensprocurandohomens
      * @param bool $idCategory
      * @return array
      */
@@ -125,33 +141,65 @@ class AnunciosModel extends  GenericModel
         $typegrande = self::DESTAQUE_GRANDE;
         $type = self::DESTAQUE_PEQUENO;
         $state = self::APROVADO;
-        return $this->getEntityManager()->createQuery("SELECT c FROM Anuncios\Entity\Sex c WHERE c.state  = '$state' AND c.type  = '$type' OR  c.type  = '$typegrande'  ORDER BY c.created DESC")
+        return $this->getEntityManager()->createQuery("SELECT c FROM Anuncios\Entity\Sex c WHERE c.state  = '$state' AND c.expiration > CURRENT_DATE() AND c.type  = '$type' OR  c.type  = '$typegrande'  ORDER BY c.created DESC")
            ->getResult();
     }
 
-    public function getPopulares()
+
+    /**
+     * Mock
+     * @return array
+     */
+    public function getBanners()
+    {
+        $banners = [];
+        for($i=0; $i<2 ; $i++)  {
+            for($j=0; $j<6 ; $j++)  {
+                $banners[$i][$j] = new Publicity();
+            }
+        }
+        return $banners;
+    }
+
+
+    public function getPopulares($limit = 2)
     {
         $type = self::DESTAQUE_PEQUENO;
         $state = self::APROVADO;
-        return $this->getEntityManager()->createQuery("SELECT c FROM Anuncios\Entity\Sex c WHERE c.state  = '$state' AND c.type  = '$type'  ORDER BY c.created DESC")
-            ->setMaxResults(2)->getResult();
+        return $this->getEntityManager()->createQuery("SELECT c FROM Anuncios\Entity\Sex c WHERE c.state  = '$state' AND c.type  = '$type' AND c.expiration > CURRENT_DATE()  ORDER BY c.created DESC")
+            ->setMaxResults($limit)->getResult();
     }
 
-    public function getSpecial()
+    public function getSpecial($limit = 1)
     {
         $typegrande = self::DESTAQUE_GRANDE;
         $state = self::APROVADO;
-        return $this->getEntityManager()->createQuery("SELECT c FROM Anuncios\Entity\Sex c WHERE c.state  = '$state' AND c.type  = '$typegrande'  ORDER BY c.created DESC")
-            ->setMaxResults(1)->getResult();
+        return $this->getEntityManager()->createQuery("SELECT c FROM Anuncios\Entity\Sex c WHERE c.state  = '$state' AND c.type  = '$typegrande' AND c.expiration > CURRENT_DATE() ORDER BY c.created DESC")
+            ->setMaxResults($limit)->getResult();
     }
 
-    public function getAllAnuniosByCity($idCity)
+    public function getAllAnuniosByType($id, $type)
     {
-
-    }
-
-    public function getAllAnuniosByCityCategory($idCity, $idCategory)
-    {
-
+        switch($type) {
+            case 'category':
+                $dpl = "SELECT c FROM Anuncios\Entity\Sex c WHERE c.state  = 'APROVADO' AND c.category = '$id' AND c.expiration > CURRENT_DATE()  ORDER BY c.created DESC";
+                /*return $this->getQueryBuilder()->select('a')
+                    ->from('Anuncios\Entity\Sex', 'a')
+                    ->where("a.state =", static::APROVADO)
+                    ->andWhere("a.city = " . $id)
+                    ->andWhere("a.expiration > CURRENT_DATE()")
+                    ->orderBy("a.created", 'DESC');*/
+                break;
+            case 'city':
+                $dpl = "SELECT c FROM Anuncios\Entity\Sex c WHERE c.state  = 'APROVADO' AND c.city = '$id'  AND c.expiration > CURRENT_DATE() ORDER BY c.created DESC";
+                /*return $this->getQueryBuilder()->select('a')
+                    ->from('Anuncios\Entity\Sex', 'a')
+                    ->where("a.state =", static::APROVADO)
+                    ->andWhere("a.expiration > CURRENT_DATE()")
+                    ->andWhere("a.category = " . $id)
+                    ->orderBy("a.created", 'DESC'); */
+                break;
+        }
+       return $this->getEntityManager()->createQuery($dpl);
     }
 } 

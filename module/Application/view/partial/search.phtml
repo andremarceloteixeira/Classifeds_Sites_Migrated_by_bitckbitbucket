@@ -1,0 +1,11 @@
+<?php
+    $searchForm = $this->searchForm;
+    $searchForm->setAttribute('id', 'search-form');
+    echo $this->form()->openTag($searchForm);
+?>
+<?php
+    $searchForm->get('searchSelect')->setAttribute('class', 'categories span3');
+     echo $this->formSelect($searchForm->get('searchSelect'));
+    echo $this->formButton($searchForm->get('submit'), 'Ver anuncios...');
+    echo $this->form()->closeTag($searchForm);
+?>

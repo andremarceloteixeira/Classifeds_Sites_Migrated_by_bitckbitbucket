@@ -1,12 +1,5 @@
 <?php
-/**
- * Coolcsn Zend Framework 2 Authorization Module
- * 
- * @link https://github.com/coolcsn/CsnAuthorization for the canonical source repository
- * @copyright Copyright (c) 2005-2013 LightSoft 2005 Ltd. Bulgaria
- * @license https://github.com/coolcsn/CsnAuthorization/blob/master/LICENSE BSDLicense
- * @author Stoyan Cheresharov <stoyan@coolcsn.com>, Stoyan Revov <st.revov@gmail.com>
-*/
+
 
 return array(
     'acl' => array(

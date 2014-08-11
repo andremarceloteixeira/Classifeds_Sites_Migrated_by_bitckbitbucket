@@ -19,9 +19,14 @@ if(empty($image)) {
                 <span><?php echo $this->page()->getDescription($sex->getDescription()); ?></span>
             </p>
             <p>
-                <a class="btn btn-warning" href="<?php echo $this->url('contactar', array('action' => 'index', 'id' =>$sex->getId()));?>"> contactar <i class="icon-comment"></i></a>
+                <?php if($sex->getSendemail() != 'NO'):?>
+                    <a class="btn btn-warning" href="<?php echo $this->url('contactar', array('action' => 'index', 'id' =>$sex->getId()));?>"> contactar <i class="icon-comment"></i></a>
+                <?php endif;?>
                 <a class="btn" href="<?php echo $this->url('article', array('article' => $sex->getUrl())); ?>">ver informação</a>
             </p>
+        </div>
+        <div class="cntr">
+            <p class="badge badge-inverse"><?php echo $this->page()->formatDate($sex->getCreated());?></p>
         </div>
     </div>
 </li>

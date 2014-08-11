@@ -1,0 +1,530 @@
+<?php
+
+namespace Anuncios\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection as Collection;
+/**
+ * Anuncios
+ *
+ * @ORM\Table(name="anuncios")
+ * @ORM\Entity
+ */
+class Anuncios
+{
+
+    protected $inputFilter;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_anuncio", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idAnuncio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo", type="string", length=30, nullable=false)
+     */
+    private $titulo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="local", type="string", length=30, nullable=false)
+     */
+    private $local;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descricao", type="string", length=1000, nullable=false)
+     */
+    private $descricao;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="permitir_email", type="string", nullable=false)
+     */
+    private $permitirEmail = 'NO';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="data_criacao", type="datetime", nullable=true)
+     */
+    private $dataCriacao;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="data_expira", type="datetime", nullable=false)
+     */
+    private $dataExpira;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="data_edicao", type="datetime", nullable=true)
+     */
+    private $dataEdicao;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=30, nullable=false)
+     */
+    private $url;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="estado", type="string", nullable=false)
+     */
+    private $estado = 'APROVADO';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", nullable=false)
+     */
+    private $tipo = 'NORMAL';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="fk_categoria", type="integer", nullable=false)
+     */
+    private $fkCategoria;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="fk_cidade", type="integer", nullable=false)
+     */
+    private $fkCidade;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=45, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Anuncios\Entity\Images",
+    mappedBy="anuncios", cascade={"persist", "remove"})
+     */
+    protected $images;
+
+    /**
+     *  @ORM\ManyToOne(targetEntity="Cidade")
+     *  @ORM\JoinTable(name="Anuncios",
+     *      joinColumns={@ORM\JoinColumn(name="Anuncios_fkCidade", referencedColumnName="fk_cidade")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="Cidade_idCidade", referencedColumnName="id_cidade")}
+     *      )
+     */
+    protected $cidades;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
+
+
+    /**
+     * @param \DateTime $dataCriacao
+     */
+    public function setDataCriacao($dataCriacao)
+    {
+        $this->dataCriacao = $dataCriacao;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDataCriacao()
+    {
+        return $this->dataCriacao;
+    }
+
+    /**
+     * @param \DateTime $dataEdicao
+     */
+    public function setDataEdicao($dataEdicao)
+    {
+        $this->dataEdicao = $dataEdicao;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDataEdicao()
+    {
+        return $this->dataEdicao;
+    }
+
+    /**
+     * @param \DateTime $dataExpira
+     */
+    public function setDataExpira($dataExpira)
+    {
+        $this->dataExpira = $dataExpira;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDataExpira()
+    {
+        return $this->dataExpira;
+    }
+
+    /**
+     * @param string $descricao
+     */
+    public function setDescricao($descricao)
+    {
+        $this->descricao = $descricao;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescricao()
+    {
+        return $this->descricao;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $estado
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * @param int $fkCategoria
+     */
+    public function setFkCategoria($fkCategoria)
+    {
+        $this->fkCategoria = $fkCategoria;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFkCategoria()
+    {
+        return $this->fkCategoria;
+    }
+
+    /**
+     * @param int $fkCidade
+     */
+    public function setFkCidade($fkCidade)
+    {
+        $this->fkCidade = $fkCidade;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFkCidade()
+    {
+        return $this->fkCidade;
+    }
+
+    /**
+     * @param int $idAnuncio
+     */
+    public function setIdAnuncio($idAnuncio)
+    {
+        $this->idAnuncio = $idAnuncio;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdAnuncio()
+    {
+        return $this->idAnuncio;
+    }
+
+    /**
+     * @param string $local
+     */
+    public function setLocal($local)
+    {
+        $this->local = $local;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocal()
+    {
+        return $this->local;
+    }
+
+    /**
+     * @param string $permitirEmail
+     */
+    public function setPermitirEmail($permitirEmail)
+    {
+        $this->permitirEmail = $permitirEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPermitirEmail()
+    {
+        return $this->permitirEmail;
+    }
+
+    /**
+     * @param string $tipo
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * @param string $titulo
+     */
+    public function setTitulo($titulo)
+    {
+        $this->titulo = $titulo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitulo()
+    {
+        return $this->titulo;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Get input filter
+     *
+     * @return InputFilterInterface
+     */
+    public function getInputFilter()
+    {
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+            $factory     = new InputFactory();
+            /*$inputFilter->add($factory->createInput(array(
+                'name'     => 'id_anuncio',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            )));*/
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'categoria',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 255,
+                        ),
+                    ),
+                ),
+            )));
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'cidade',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 255,
+                        ),
+                    ),
+                ),
+            )));
+
+
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'titulo',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 255,
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'descricao',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'local',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                        ),
+                    ),
+                ),
+            )));
+            $inputFilter->add($factory->createInput([
+                'name' => 'termosecondicoes',
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                ),
+            ]));
+
+
+            $this->inputFilter = $inputFilter;
+        }
+
+        return $this->inputFilter;
+    }
+
+    public function addImage(Images $images)
+    {
+        $images->setAnuncio($this);
+        $this->images->add($images);
+    }
+
+    public function removeImage(Images $images)
+    {
+        $images->setAuncio(null);
+        $this->images->removeElement($images);
+    }
+
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+
+    /**
+     * Set cidades
+     *
+     * @param \Anuncios\Entity\Cidade $cidades
+     * @return Anuncios
+     */
+    public function setCidades(\Anuncios\Entity\Cidade $cidades = null)
+    {
+        $this->cidades = $cidades;
+
+        return $this;
+    }
+
+    /**
+     * Get cidades
+     *
+     * @return \Anuncios\Entity\Cidade 
+     */
+    public function getCidades()
+    {
+        return $this->cidades;
+    }
+}

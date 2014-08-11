@@ -1,13 +1,15 @@
 <div class="span9">
 <div class="products">
-<?php echo $this->partial('partial/categorias/mulher-mulher', ['allDataCategory' =>$allDataCategory['mulheresprocurandomulheres']]);?>
-<?php echo $this->partial('partial/categorias/mulher-homem',['allDataCategory' =>$allDataCategory['mulheresprocurandohomens']]);?>
-<?php echo $this->partial('partial/categorias/homem-mulher',['allDataCategory' => $allDataCategory['homensprocurandomulheres']]);?>
-<?php echo $this->partial('partial/categorias/homem-homem',['allDataCategory' => $allDataCategory['homensprocurandohomens']]);?>
-<?php //echo $this->partial('partial/categorias/geral');?>
+
+<?php
+if (!$searchCategory) {
+    echo $this->partial('partial/categorias/mulher-mulher', ['allDataCategory' =>$allDataCategory['mulheresprocurandomulheres']]);
+    echo $this->partial('partial/categorias/mulher-homem',['allDataCategory' =>$allDataCategory['mulheresprocurandohomens']]);
+    echo $this->partial('partial/categorias/homem-mulher',['allDataCategory' => $allDataCategory['homensprocurandomulheres']]);
+    echo $this->partial('partial/categorias/homem-homem',['allDataCategory' => $allDataCategory['homensprocurandohomens']]);
+} else {
+    echo $this->partial('partial/categorias/geral', ['listOfSexs' => $listOfSexs,  'title' => $title, 'paginator' => $paginator,'type' => $type]);
+}?>
 </div>
 </div>
 </div>
-<?php if(count($destaques)> 0):?>
-<?php echo $this->partial('partial/categorias/relacoes', ['destaques' => $destaques]);?>
-<?php endif;?>

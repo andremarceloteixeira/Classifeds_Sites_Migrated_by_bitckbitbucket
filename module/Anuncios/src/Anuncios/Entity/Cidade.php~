@@ -1,0 +1,64 @@
+<?php
+
+namespace Anuncios\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Cidade
+ *
+ * @ORM\Table(name="cidade")
+ * @ORM\Entity
+ */
+class Cidade
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_cidade", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCidade;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=30, nullable=true)
+     */
+    private $nome;
+
+    /**
+     * @param int $idCidade
+     */
+    public function setIdCidade($idCidade)
+    {
+        $this->idCidade = $idCidade;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdCidade()
+    {
+        return $this->idCidade;
+    }
+
+    /**
+     * @param string $nome
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+
+}

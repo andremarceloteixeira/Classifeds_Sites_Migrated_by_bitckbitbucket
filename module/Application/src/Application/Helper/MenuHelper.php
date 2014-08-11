@@ -24,10 +24,10 @@ class MenuHelper extends AbstractHelper
                 'name' =>'PUBLICIDADE BANNERS',
                 'separator' => true
          ),
-        '/apps' => array (
+        /*'/apps' => array (
             'name' =>'APLICACAO PARA ANDROID',
             'separator' => true
-        ),
+        ),*/
         '/contactos' => array (
             'name' => 'CONTACTAR'
         ),

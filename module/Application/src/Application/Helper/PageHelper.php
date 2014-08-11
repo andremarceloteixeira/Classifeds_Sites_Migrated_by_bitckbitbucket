@@ -6,7 +6,7 @@ use Zend\View\Helper\AbstractHelper;
 class PageHelper extends AbstractHelper
 {
     public $serviceLocator;
-
+    const MARCAS_LINE = 2;
     public function __construct ($locator)
     {
        $this->serviceLocator = $locator;
@@ -36,6 +36,14 @@ class PageHelper extends AbstractHelper
         return $this->getProtocol(). '://' . $url;
     }
 
+    public function getBannerUrl($url)
+    {
+        if (empty($url)) {
+            return $this->getProtocol(). '://' . $this->getHost() .'/themes/images/clients/1.png';
+        }
+        return $this->getProtocol(). '://' . $this->getHost() . $url;
+    }
+
     public function getBigImage($path = null)
     {
         $url = $this->getHost() . '/data/uploads/big/'. $path ;
@@ -50,11 +58,16 @@ class PageHelper extends AbstractHelper
         return $this->getProtocol(). '://' . $url;
     }
 
+    public function formatDate($date)
+    {
+        return $date->format('d/m/Y');
+    }
+
     private function imageExists($url)
     {
         $url =  $this->getProtocol(). '://' .$url;
         if(!empty($url)) {
-            if (getimagesize($url) !== false) {
+            if (file_exists($url)) {
                 return true;
             }
         }
@@ -73,13 +86,17 @@ class PageHelper extends AbstractHelper
     }
 
 
-    public function getDescription($url)
+    public function getDescription($url, $chars = 30)
     {
-        return substr($url, 0, 30) . '...';
+        if(strlen($url) <= $chars) {
+            return substr($url, 0, $chars);
+        }
+        return substr($url, 0, $chars) . '...';
     }
       
     public function getProtocol() 
     {
        return $this->getRequest()->getUri()->getScheme(); 
     }
+
 }

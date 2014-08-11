@@ -1,0 +1,87 @@
+<?php
+
+namespace Anuncios\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Publicidade
+ *
+ * @ORM\Table(name="publicidade")
+ * @ORM\Entity
+ */
+class Publicidade
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_publicidade", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idPublicidade;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="banner_name", type="string", length=100, nullable=true)
+     */
+    private $bannerName;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="fk_utilizador", type="integer", nullable=true)
+     */
+    private $fkUtilizador;
+
+    /**
+     * @param string $bannerName
+     */
+    public function setBannerName($bannerName)
+    {
+        $this->bannerName = $bannerName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBannerName()
+    {
+        return $this->bannerName;
+    }
+
+    /**
+     * @param int $fkUtilizador
+     */
+    public function setFkUtilizador($fkUtilizador)
+    {
+        $this->fkUtilizador = $fkUtilizador;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFkUtilizador()
+    {
+        return $this->fkUtilizador;
+    }
+
+    /**
+     * @param int $idPublicidade
+     */
+    public function setIdPublicidade($idPublicidade)
+    {
+        $this->idPublicidade = $idPublicidade;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdPublicidade()
+    {
+        return $this->idPublicidade;
+    }
+
+
+}

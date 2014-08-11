@@ -1,453 +1,34 @@
+<?php if(count($top) >= 3) : ?>
 <section id="mainCarousel">
     <div class="displayStyle">
         <div id="myCarousel" class="carousel slide">
-            <span class="newTag tagRight"></span>
+            <span class="tagRight"></span>
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                 <li data-target="#myCarousel" data-slide-to="1"></li>
                 <li data-target="#myCarousel" data-slide-to="2"></li>
             </ol>
             <div class="carousel-inner">
-                <div class="item active">
-                    <div class="row">
-                        <div class="span6">
-                            <img src="themes/images/carousel/carousel2.jpg" alt="#" />
-                        </div>
-                        <div class="span6">
-                            <div class="promoDetail">
-                                <h1>Ladies Pullover Doll Collar  <span>3/4 Sleeves Chiffon Blouse Blue M</span></h1>
-
-                                <p>Sourcingmap</p>
-                                <ul>
-                                    <li>Size: Medium, Colour: Blue</li>
-                                    <li>In stock. Dispatched from and sold by sourcingmap.</li>
-                                    <li>US Size : 8;UK Size : 10;EU Size : 38</li>
-                                    <li>Bust Girth : 36 inches;Waist Girth : 28 inches;Hip Girth : 38.5 inches</li>
-                                    <li>Shoulder Width: 15.7inches, Sleeve Length: 16inches, Total Length: 22.8inches, Net Weight: 82g</li>
-                                </ul>
-
-                                <p>Reviews: <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star-empty"></i></p>
-                                <br>
-                                <div class="cntr">
-                                    <h3>Price: $9.00 <small class="oldPrice">$18.00</small></h3>
-                                    <a class="btn btn-success" href="details.php" >50% off BUY NOW</a>
-                                    <br>
-                                    <br>
-                                    <div class="fb-like" data-href="http://www.bootstrappage.com/" data-send="false" data-layout="button_count" data-width="80" data-show-faces="true"></div>
-                                    <br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="row">
-                        <div class="span6">
-                            <img src="themes/images/carousel/carousel3.jpg" alt="#" />
-                        </div>
-                        <div class="span6">
-                            <div class="promoDetail">
-                                <h1>Women Zipper Closure Hooded   <span>Short Sleeve Mini Dress </span></h1>
-                                <p>Sourcingmap</p>
-                                <ul>
-                                    <li>Size: X-Small</li>
-                                    <li>Colour: Navy blue</li>
-                                    <li>In stock. Dispatched from and sold by sourcingmap.</li>
-                                    <li>US Size : 2;UK Size : 4;EU Size : 32</li>
-                                    <li>Bust Girth : 33 inches;Waist Girth : 25 inches;Hip Girth : 35.5inches</li>
-                                    <li>Shoulder Width : 16.5 inches;Sleeve Length : 6.7inches;Total Length : 31.5inches</li>
-                                </ul>
-                                <p>Reviews: <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i>  <i class="icon-star"></i> <i class="icon-star-empty"></i></p>
-                                <br/>
-                                <div class="cntr">
-                                    <h3>Price: $14.00 <small class="oldPrice">$28.00</small></h3>
-                                    <br/>
-                                    <a class="btn btn-warning" href="details.php" >50% off BUY NOW</a>
-                                    <br/>
-                                    <br/>
-                                    <div class="fb-like" data-href="http://www.bootstrappage.com/" data-send="false" data-layout="button_count" data-width="80" data-show-faces="true"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="row">
-                        <div class="span6">
-                            <img src="themes/images/carousel/carousel4.jpg" alt="#" />
-                        </div>
-                        <div class="span6">
-                            <div class="promoDetail">
-                                <h1>Woman Sheer Long Sleeve   <span>Doll Collar Blouse Shirt Burgundy </span></h1>
-                                <p>Sourcingmap </p>
-                                <ul>
-                                    <li>US Size : 10;UK Size : 12;EU Size : 40</li>
-                                    <li>Bust Girth : 37 inches;Waist Girth : 29 inches;Hip Girth : 39.5 inches</li>
-                                    <li>Shoulder Width :41cm / 16inches; Sleeve Length (inches):58cm / 23 inches; Total Length:62cm / 24.4inches</li>
-                                    <li>In stock. Dispatched from and sold by sourcingmap.</li>
-                                    <li>Color:  Burgundy</li>
-                                </ul>
-                                <p>Reviews: <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i> <i class="icon-star"></i><i class="icon-star"></i> <i class="icon-star-empty"></i></p>
-                                <br/>
-                                <div class="cntr">
-                                    <h3>Price: $12.25 <small class="oldPrice">$24.50</small></h3>
-                                    <a class="btn btn-danger" href="details.php" >50% off BUY NOW</a>
-                                    <br>
-                                    <br>
-                                    <div class="fb-like" data-href="http://www.bootstrappage.com/" data-send="false" data-layout="button_count" data-width="80" data-show-faces="true"></div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php echo $this->partial('application/partial/big_row',['top' => $top]);?>
             </div>
             <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
             <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
         </div>
     </div>
 </section>
-
+<?php endif;?>
+<?php if(count($nDestaques)== 2 && count($nDestaques[0])==4 && count($nDestaques[1])==4) :?>
 <section id="featuredProduct">
-<h3 class="title"><span>Anuncios em destaque</span></h3>
+<h3 class="title"><span>Anúncios em destaque</span></h3>
 <div id="myCarouselOne" class="carousel slide">
     <!-- Dot Indicators -->
     <div class="carousel-inner">
-        <div class="item active">
-            <div class="row">
-                <div class="span3">
-                    <div class="well well-small">
-                        <span class="newTag"></span>
-					<span class="priceTag">
-						<small class="oldPrice"><small>$</small>440.00</small>
-						<span class="newPrice"><small>$</small>400.00</span>
-					</span>
-                        <a class="displayStyle" href="#"><img src="themes/images/clothes/1.jpg" alt="#"/></a>
-                        <h5>Clothings</h5>
-                        <p>
-                            <a class="btn btn-warning" href="#" > Add to <i class="icon-shopping-cart"></i></a>
-                            <a class="btn" href="details.php">view details</a>
-                        </p>
-                        <p><span class="price"><small>$</small>400.00</span></p>
-
-                    </div>
-                </div>
-                <div class="span3">
-                    <div class="well well-small">
-
-					<span class="priceTag">
-						<small class="oldPrice"><small>$</small>40.00</small>
-						<span class="newPrice"><small>$</small>20.00</span>
-					</span>
-                        <a class="displayStyle" href="#"><img src="themes/images/clothes/2.jpg"  alt="#"/></a>
-                        <h5>Clothings</h5>
-                        <p>
-                            <a class="btn btn-success" href="#" > Add to <i class="icon-shopping-cart"></i></a>
-                            <a class="btn" href="details.php">view details</a>
-                        </p>
-                        <p>
-                            <span class="price"><small>$</small>20.00</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="span3">
-                    <div class="well well-small">
-				<span class="priceTag">
-					<small class="oldPrice"><small>$</small>1.00</small>
-					<span class="newPrice"><small>$</small>25.00</span>
-				</span>
-                        <a class="displayStyle" href="#"><img src="themes/images/clothes/3.jpg" alt="#"/></a>
-                        <h5>Clothings </h5>
-                        <p>
-                            <a class="btn btn-danger" href="#" > Add to <i class="icon-shopping-cart"></i></a>
-                            <a class="btn" href="details.php">view details</a>
-                        </p>
-                        <p>
-                            <span class="price"><small>$</small>25.00</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="span3">
-                    <div class="well well-small">
-					<span class="priceTag">
-					<small class="oldPrice"><small>$</small>300.00</small>
-					<span class="newPrice"><small>$</small>250.00</span>
-					</span>
-                        <span class="saleTag tagRight"></span>
-                        <a class="displayStyle" href="#"><img src="themes/images/clothes/4.jpg" alt="#"/></a>
-                        <h5>Clothings</h5>
-                        <p>
-                            <a class="btn btn-primary" href="#" > Add to <i class="icon-shopping-cart"></i></a>
-                            <a class="btn" href="details.php">view details</a>
-                        </p>
-                        <p>
-                            <span class="price"><small>$</small>250.00</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="row">
-                <div class="span3">
-                    <div class="well well-small">
-                        <span class="newTag"></span>
-				<span class="priceTag">
-					<small class="oldPrice"><small>$</small>440.00</small>
-					<span class="newPrice"><small>$</small>400.00</span>
-				</span>
-                        <a class="displayStyle" href="#"><img src="themes/images/clothes/5.jpg" alt="#"/></a>
-                        <h5>Clothings</h5>
-                        <p>
-                            <a class="btn btn-warning" href="#" > Add to <i class="icon-shopping-cart"></i></a>
-                            <a class="btn" href="details.php">view details</a>
-                        </p>
-                        <p><span class="price"><small>$</small>400.00</span></p>
-
-                    </div>
-                </div>
-                <div class="span3">
-                    <div class="well well-small">
-				<span class="priceTag">
-					<small class="oldPrice"><small>$</small>40.00</small>
-					<span class="newPrice"><small>$</small>20.00</span>
-				</span>
-                        <a class="displayStyle" href="#"><img src="themes/images/clothes/6.jpg"  alt="#"/></a>
-                        <h5>Clothings</h5>
-                        <p>
-                            <a class="btn btn-success" href="#" > Add to <i class="icon-shopping-cart"></i></a>
-                            <a class="btn" href="details.php">view details</a>
-                        </p>
-                        <p>
-                            <span class="price"><small>$</small>20.00</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="span3">
-                    <div class="well well-small">
-			<span class="priceTag">
-				<small class="oldPrice"><small>$</small>1.00</small>
-				<span class="newPrice"><small>$</small>25.00</span>
-			</span>
-                        <a class="displayStyle" href="#"><img src="themes/images/clothes/7.jpg" alt="#"/></a>
-                        <h5>Clothings </h5>
-                        <p>
-                            <a class="btn btn-danger" href="#" > Add to <i class="icon-shopping-cart"></i></a>
-                            <a class="btn" href="details.php">view details</a>
-                        </p>
-                        <p>
-                            <span class="price"><small>$</small>25.00</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="span3">
-                    <div class="well well-small">
-				<span class="priceTag">
-				<small class="oldPrice"><small>$</small>300.00</small>
-				<span class="newPrice"><small>$</small>250.00</span>
-				</span>
-                        <span class="saleTag tagRight"></span>
-                        <a class="displayStyle" href="#"><img src="themes/images/clothes/8.jpg" alt="#"/></a>
-                        <h5>Clothings</h5>
-                        <p>
-                            <a class="btn btn-primary" href="#" > Add to <i class="icon-shopping-cart"></i></a>
-                            <a class="btn" href="details.php">view details</a>
-                        </p>
-                        <p>
-                            <span class="price"><small>$</small>250.00</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php echo $this->partial('application/partial/row',['nDestaques' => $nDestaques, 'lines' => $lines]);?>
     </div>
     <a class="left carousel-control" href="#myCarouselOne" data-slide="prev">‹</a>
     <a class="right carousel-control" href="#myCarouselOne" data-slide="next">›</a>
 </div>
-
-<h3 class="title"><span>ANÚNCIOS MAIS RECENTES</span></h3>
-<div id="showCase" class="row">
-    <div class="span2">
-        <div class="carousel slide">
-            <div class="carousel-inner">
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma6.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item active">
-                    <a href="details.php"><img src="themes/images/clothes/sma5.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma4.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma3.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma2.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma1.jpg" alt="#">
-                        View Details</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="span2">
-        <div class="carousel slide">
-            <div class="carousel-inner">
-                <div class="item active">
-                    <a href="details.php"><img src="themes/images/clothes/sma5.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma4.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma3.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma2.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma1.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma6.jpg" alt="#">
-                        View Details</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="span2">
-        <div class="carousel slide">
-            <div class="carousel-inner">
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma4.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma3.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma2.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma1.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma6.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item active">
-                    <a href="details.php"><img src="themes/images/clothes/sma5.jpg" alt="#">
-                        View Details</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="span2">
-        <div class="carousel slide">
-            <div class="carousel-inner">
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma3.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma2.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma1.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item active">
-                    <a href="details.php"><img src="themes/images/clothes/sma6.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma5.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma4.jpg" alt="#">
-                        View Details</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="span2">
-        <div class="carousel slide">
-            <div class="carousel-inner">
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma2.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma1.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item active">
-                    <a href="details.php"><img src="themes/images/clothes/sma6.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma5.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma4.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma3.jpg" alt="#">
-                        View Details</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="span2">
-        <div class="carousel slide">
-            <div class="carousel-inner">
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma1.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma6.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item active">
-                    <a href="details.php"><img src="themes/images/clothes/sma5.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma4.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma3.jpg" alt="#">
-                        View Details</a>
-                </div>
-                <div class="item">
-                    <a href="details.php"><img src="themes/images/clothes/sma2.jpg" alt="#">
-                        View Details</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<?php endif;?>
 </section>
 <section id="scn">
     <h3 class="title"><span>Sobre nos</span></h3>
@@ -455,7 +36,7 @@
         <div class="span4">
             <h1><i class="icon-heart"></i> </h1>
             <h4>Porque?</h4>
-            <p>Muitas das vezes, precisamos de amor carinho e afecto. Estar por uma profissional nao quer dizer que vamos correr risco, muito pelo contrario vamos satisfazer o nosso prazer... E ficar tranquilizados</p>
+            <p>Muitas das vezes, precisamos de amor carinho e afecto. Estar com uma "profissional" não quer dizer que vamos correr risco, muito pelo contrario vamos satisfazer o nosso prazer... E ficar tranquilizados</p>
             <p>Este portal tambem se destina aos solteiros e solteiras que podem colocar aqui os seus anuncios e marcar encontros sem qualquer custo, marcar um cafe, um passeio entre outros. Apensas serve para juntar o ultil ao agradavel...</p>
         </div>
         <div class="span4">
@@ -468,51 +49,20 @@
         </div>
         <div class="span4">
             <h1><i class="icon-comments-alt"></i> </h1>
-            <h4>Encontre-nos e seja nosso amigo</h4>
+            <h4>Encontre-nos e faça um gosto</h4>
             <p class="findUs">
-                <a href="#"><i class="icon-facebook"></i></a>
+                <a targe="_blank" href="https://www.facebook.com/pages/sexojacom/589694244484300"><i class="icon-facebook"></i></a>
             </p>
             <h4>Publique ja o seu anuncio gratuitamente</h4>
             <div class="caption">
-                <p> </p>
-                <form class="">
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-success ">PUBLICAR UM ANUNCIO</button>
+                            <a href="<?php echo $this->url('anunciar', array('action' => 'add'));?>" class="btn btn-success ">PUBLICAR UM ANUNCIO</a>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
     </div>
 </section>
 <hr class="soften"/>
-<section id="client">
-    <h3 class="title"><span>Marcas em destaque...</span></h3>
-    <div id="clients" class="carousel slide">
-        <div class="carousel-inner">
-            <div class="item active">
-                <div class="span12">
-                    <img src="themes/images/clients/1.png" alt="#" />
-                    <img src="themes/images/clients/1.png" alt="#" />
-                    <img src="themes/images/clients/1.png" alt="#" />
-                    <img src="themes/images/clients/1.png" alt="#" />
-                    <img src="themes/images/clients/1.png" alt="#" />
-                    <img src="themes/images/clients/1.png" alt="#" />
-                </div>
-            </div>
-            <div class="item">
-                <div class="span12">
-                    <img src="themes/images/clients/1.png" alt="#" />
-                    <img src="themes/images/clients/1.png" alt="#" />
-                    <img src="themes/images/clients/1.png" alt="#" />
-                    <img src="themes/images/clients/1.png" alt="#" />
-                    <img src="themes/images/clients/1.png" alt="#" />
-                    <img src="themes/images/clients/1.png" alt="#" />
-                </div>
-            </div>
-        </div>
-        <a class="left carousel-control" href="#clients" data-slide="prev">‹</a>
-        <a class="right carousel-control" href="#clients" data-slide="next">›</a>
-    </div>
-</section>
+<?php echo $this->partial('application/partial/marcas', ['marcas' => $marcas]);?>

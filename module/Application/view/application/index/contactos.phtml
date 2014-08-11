@@ -1,8 +1,30 @@
 <section id="mainBody">
-<div class="container">
-<h3 class="title"><span>CONTACTE-NOS</span></h3>
-<div class="row">
-    FORMULARIO PARA CONTACTOS
-</div>
-</div>
+    <div class="container">
+        <h3 class="title"><span>ENVIE UMA MENSAGEM</span></h3>
+        <ul class="breadcrumb">
+            <li><a href="#">Home</a> <span class="divider">/</span></li>
+            <li class="active">Contactos</li>
+        </ul>
+        <div class="row">
+            <div class="span6">
+                <iframe id="gMap" src="https://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=18+Porto,Portugal&amp;output=embed"></iframe>
+                <h4>Envio-nos um email para destaques por exemplo</h4>
+                <p>	<strong>Sexo ja</strong><br/>
+                    Rua do Sexo<br/>
+                    Lisboa, Portugal<br/>
+                    E: <a href="mailto:contacto.sexoja@gmail.com">contacto.sexoja@gmail.com</a><br/>
+                    web: <a href="http://www.sexoja.com">http://www.sexoja.com</a>
+                </p>
+            </div>
+            <div class="span6">
+                <h4>Contactar via email</h4><br/>
+                <?php
+                $this->form->setAttribute('action', $this->url('contactos', array('action' => 'contactos')));
+                $this->form->setAttribute('class', 'form-horizontal');
+                echo $this->ztbForm($this->form);?>
+                <p class="pull-right badge badge-important">[ * ] Campos obrigatorios</p>
+                <br/>
+            </div>
+        </div>
+    </div>
 </section>

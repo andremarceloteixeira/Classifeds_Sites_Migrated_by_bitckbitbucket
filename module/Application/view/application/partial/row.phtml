@@ -1,0 +1,40 @@
+<?php for($i = 0; $i < $lines ; $i++) :?>
+<div class="item <?php echo $i==0 ? 'active' : ''?>">
+    <div class="row">
+        <?php foreach($nDestaques[$i]  as $anuncio) :
+        /**
+         * @var $sex \Anuncios\Entity\Sex
+         */
+        $sex = $anuncio;
+        $image = $sex->getImages()->first();
+        if(empty($image)) {
+            $url = '';
+        }else {
+            $url = $sex->getImages()->first()->getUrl();
+        }
+        ?>
+        <div class="span3">
+            <div class="well well-small">
+					<span class="priceTag">
+						<span class="newPrice">
+                            <span class="newPrice"><small class=" icon-heart"></small></span>
+                            <small class="">Beijinho</small>
+						</span>
+					</span>
+                <a class="displayStyle" href="<?php echo $this->url('article', array('article' => $sex->getUrl())); ?>"><img src="<?php echo $this->page()->getUrl('image', $url); ?>"  alt="#"/></a>
+                <h5><?php echo $sex->getTitle(); ?></h5>
+                <p>
+                   <?php if($sex->getSendemail() != 'NO'):?>
+                    <a class="btn btn-warning" href="<?php echo $this->url('contactar', array('action' => 'index', 'id' =>$sex->getId()));?>"> contactar <i class="icon-comment"></i></a>
+                  <?php endif;?>
+                    <a class="btn" href="<?php echo $this->url('article', array('article' => $sex->getUrl())); ?>">ver informação</a>
+                </p>
+                <p>
+                    <span><?php echo $this->page()->getDescription($sex->getDescription()); ?></span>
+                </p>
+            </div>
+        </div>
+        <?php endforeach;?>
+    </div>
+</div>
+<?php endfor; ?>

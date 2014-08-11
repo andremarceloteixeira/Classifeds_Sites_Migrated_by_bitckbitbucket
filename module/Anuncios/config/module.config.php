@@ -30,13 +30,26 @@ return array(
                     ),
                 ),
             ),
+                'paginator-doctrine' => array(
+                    'type'    => 'Segment',
+                    'options' => array(
+                        'route' => '/anuncios[/category/:category][/city/:city][/page/:page]',
+                        'constraints' => array(
+                            'page' => '[0-9]*',
+                        ),
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'Anuncios\Controller',
+                            'controller' => 'Anuncios\Controller\Index',
+                            'action'     => 'anuncios',
+                        ),
+                    ),
+            ),
             'anunciar' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/anunciar[/:action][/:id]',
+                    'route' => '/anunciar[/:action][/:id][/:hash]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Anuncios\Controller\Index',
@@ -68,7 +81,7 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Anuncios\Controller\Utilizador',
-                        'action'     => 'index',
+                        'action'     => 'registar',
                     ),
                 ),
             ),
@@ -108,8 +121,6 @@ return array(
             /*'Zend\Authentication\AuthenticationService' => 'CsnUser\Service\Factory\AuthenticationFactory',*/
             'mail.transport' => 'Anuncios\Service\Factory\MailTransportFactory',
             'anuncios_module_options' => 'Anuncios\Service\Factory\ModuleOptionsFactory',
-            /*'csnuser_error_view' => 'CsnUser\Service\Factory\ErrorViewFactory',
-            'csnuser_user_form' => 'CsnUser\Service\Factory\UserFormFactory', */
         ),
     ),
 );

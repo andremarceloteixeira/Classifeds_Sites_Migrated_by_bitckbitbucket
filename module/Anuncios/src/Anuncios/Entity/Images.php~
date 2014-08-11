@@ -1,0 +1,102 @@
+<?php
+
+namespace Anuncios\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Images
+ *
+ * @ORM\Table(name="images")
+ * @ORM\Entity
+ */
+class Images
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_image", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idImage;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="url", type="string", length=200, nullable=true)
+     */
+    private $url;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="fk_anuncio", type="integer", nullable=true)
+     */
+    private $fkAnuncio;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Anuncios\Entity\Anuncios", inversedBy="images")
+     * @ORM\JoinColumn(name="fk_anuncio", referencedColumnName="id_anuncio", onDelete="CASCADE")
+     */
+    protected $anuncio;
+
+    /**
+     * @param int $fkAnuncio
+     */
+    public function setFkAnuncio($fkAnuncio)
+    {
+        $this->fkAnuncio = $fkAnuncio;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFkAnuncio()
+    {
+        return $this->fkAnuncio;
+    }
+
+    /**
+     * @param int $idImage
+     */
+    public function setIdImage($idImage)
+    {
+        $this->idImage = $idImage;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdImage()
+    {
+        return $this->idImage;
+    }
+
+    /**
+     * @param int $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+
+        public function setAnuncio(Anuncios $anuncios = null)
+    {
+        $this->anuncio = $anuncios;
+    }
+
+    public function getAnuncio()
+    {
+        return $this->anuncio;
+    }
+}

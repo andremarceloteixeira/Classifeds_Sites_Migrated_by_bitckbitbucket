@@ -1,6 +1,19 @@
-/**
- * Created by mteixeira on 8/6/14.
- */
+$.extend({
+    getUrlVars: function(){
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    },
+    getUrlVar: function(name){
+        return $.getUrlVars()[name];
+    }
+});
 $(document).ready(function () {
     var elements = document.getElementsByTagName("textarea");
     for (var i = 0; i < elements.length; i++) {
@@ -33,4 +46,7 @@ $(document).ready(function () {
         // On submit disable its submit button
         $('input[type=submit]', this).attr('disabled', 'disabled');
     });
+    if($.getUrlVar('searchSelect')) {
+       $('.categories').val($.getUrlVar('searchSelect'));
+    }
 });

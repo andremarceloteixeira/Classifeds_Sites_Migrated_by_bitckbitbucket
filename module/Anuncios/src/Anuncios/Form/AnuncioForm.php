@@ -9,6 +9,7 @@ class AnuncioForm extends Form
 {
     public function __construct(ObjectManager $objectManager,$isEdit = false)
     {
+        $sex = false;
         parent::__construct('post');
 
         $this->setAttribute('method', 'post')->setHydrator(new DoctrineHydrator($objectManager,
@@ -19,6 +20,7 @@ class AnuncioForm extends Form
             'type' => 'Zend\Form\Element\Csrf',
         ));
         if ($isEdit) {
+            $sex = $objectManager->getRepository('Anuncios\Entity\Sex')->findOneBy(array('id' => $isEdit));
             $this->add(array(
                 'name' => 'id',
                 'type'  => 'Zend\Form\Element\Hidden',
@@ -33,6 +35,9 @@ class AnuncioForm extends Form
             'type' => 'DoctrineModule\Form\Element\ObjectSelect',
             'options' => array(
                 'label' => 'Categoria *',
+                'label_attributes' => array(
+                    'for' => 'category_id',
+                ),
                 'object_manager' => $objectManager,
                 'target_class' => 'Anuncios\Entity\Category',
                 'property' => 'name'
@@ -47,6 +52,9 @@ class AnuncioForm extends Form
             'type' => 'DoctrineModule\Form\Element\ObjectSelect',
             'options' => array(
                 'label' => 'Cidade *',
+                'label_attributes' => array(
+                    'for' => 'city_id',
+                ),
                 'object_manager' => $objectManager,
                 'target_class' => 'Anuncios\Entity\City',
                 'property' => 'name'
@@ -60,7 +68,12 @@ class AnuncioForm extends Form
         $this->add(array(
             'name' => 'title',
             'type'  => 'Zend\Form\Element\Text',
-            'options' => array('label' => 'Titúlo * '),
+            'options' => array(
+                'label' => 'Titúlo * ',
+                'label_attributes' => array(
+                    'for' => 'title',
+                ),
+            ),
             'attributes' => array(
                 'class' => 'input-xxlarge',
                 'property' => 'title'
@@ -69,7 +82,12 @@ class AnuncioForm extends Form
         $this->add(array(
             'name' => 'email',
             'type' => 'Zend\Form\Element\Email',
-            'options' => array('label' => 'O seu email * '),
+            'options' => array(
+                'label' => 'O seu email * ',
+                'label_attributes' => array(
+                    'for' => 'email',
+                ),
+            ),
             'attributes' => array(
                 'class' => 'input-xxlarge',
                 'property' => 'email'
@@ -78,7 +96,13 @@ class AnuncioForm extends Form
         $this->add(array(
             'name' => 'description',
             'type'  => 'Zend\Form\Element\Textarea',
-            'options' => array('label' => 'Descrição *',  'property' => 'descricao'),
+            'options' => array(
+                'label' => 'Descrição *',
+                'property' => 'descricao',
+                'label_attributes' => array(
+                    'for' => 'description',
+                ),
+            ),
             'attributes' => array(
                 'class' =>'input-xxlarge',
                 'property' => 'description'
@@ -87,7 +111,12 @@ class AnuncioForm extends Form
         $this->add(array(
             'name' => 'local',
             'type'  => 'Zend\Form\Element\Text',
-            'options' => array('label' => 'Local * '),
+            'options' => array(
+                'label' => 'Local * ',
+                'label_attributes' => array(
+                    'for' => 'local',
+                ),
+            ),
             'attributes' => array(
                 'class' => 'input-xxlarge',
                 'property' => 'local'
@@ -105,6 +134,31 @@ class AnuncioForm extends Form
                 'target_element' => $imageFieldset
             )
         ));
+        if ($isEdit) {
+            $images =  $sex->getImages();
+            $removeImages = [];
+            if(!empty($images)) {
+                foreach($images as $image) {
+                    $removeImages[$image->getId()]= $image->getUrl();
+                }
+                if(!empty($removeImages)) {
+                    $this->add(array(
+                        'name' => 'removeImages[]',
+                        'type' => 'Zend\Form\Element\MultiCheckbox',
+                        'attributes' => array(
+                            'required' => false,
+                            'value' => '0',
+                        ),
+                        'options' => array(
+                            'label' => 'Remover Images',
+                            'value_options' => $removeImages
+                        ),
+                    ));
+                }
+
+            }
+        }
+
         $this->add(array(
             'type' => 'Zend\Form\Element\Radio',
             'name' => 'sendemail',
@@ -112,7 +166,7 @@ class AnuncioForm extends Form
                 'label' => 'Permitir o email para contactos?',
                 'value_options' => array(
                     'YES' => 'Exibir meu endereço de email no site',
-                    'CONTACTO' => 'Não mostrar meu email, mas permitir que outros entrem em contato através do formulário',
+                    /*'CONTACTO' => 'Não mostrar meu email, mas permitir que outros entrem em contato através do formulário',*/
                     'NO' => 'Não exibir meu endereço de email',
                 ),
             ),
@@ -128,9 +182,8 @@ class AnuncioForm extends Form
                 'value' => '0',
             ),
             'options' => array(
-                'label' => 'Termos e condições',
                 'value_options' => array(
-                    '0' => 'Termos e condiçes(ver link no rodapé)',
+                    '0' => 'Termos e condições', //colocar o link para os termos e condições
                 ),
             ),
         ));

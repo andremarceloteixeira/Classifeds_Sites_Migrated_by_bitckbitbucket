@@ -1,0 +1,44 @@
+<?php $i=0;?>
+<?php foreach($top as $anuncio):
+    /**
+     * @var $sex \Anuncios\Entity\Sex
+     */
+    $sex = $anuncio;
+    $image = $sex->getImages()->first();
+    if(empty($image)) {
+        $url = '';
+    }else {
+        $url = $sex->getImages()->first()->getUrl();
+    }?>
+<div class="item <?php echo $i==0 ? 'active' : ''?>">
+    <div class="row">
+        <div class="span6">
+            <img src="<?php echo $this->page()->getUrl('image', $url); ?>" alt="<?php echo $sex->getTitle(); ?>" />
+        </div>
+        <div class="span6">
+            <div class="promoDetail">
+                <h1><?php echo $sex->getTitle(); ?></h1>
+                <p>Detalhes</p>
+                <ul>
+                    <li>Cidade : <a href="<?php echo $this->url('anuncios', array('action' => 'index', 'city' => $sex->getCity()->getId()));?>"><?php echo $sex->getCity()->getName();?></a></li>
+                    <li>Local : <?php echo $sex->getLocal()?></li>
+                    <li>Categoria : <a href="<?php echo $this->url('anuncios', array('action' => 'index', 'category' => $sex->getCategory()->getId()));?>"><?php echo $sex->getCategory()->getName();?></a></li>
+                    <li>Publicado em : <?php echo $this->page()->formatDate($sex->getCreated());?></li>
+                    <li>Expira em : <?php echo $this->page()->formatDate($sex->getExpiration());?></li>
+                </ul>
+                <?php if($sex->getSendemail() != 'NO'):?>
+                    <p>Responder para: <a href="mailto:<?php echo $sex->getEmail();?>"><?php echo $sex->getEmail();?></a></p>
+                <?php endif;?>
+                <br>
+                <div class="cntr">
+                    <p><?php echo $this->page()->getDescription($sex->getDescription(), 200);?></p>
+                    <a class="btn btn-danger" href="<?php echo $this->url('article', array('article' => $sex->getUrl())); ?>" >MAIS DETALHES</a>
+                    <br>
+                    <br>
+                    <div class="fb-like" data-href="http://sexoja.com/" data-send="true" data-layout="button_count" data-width="80" data-show-faces="true"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php $i++; endforeach;?>
