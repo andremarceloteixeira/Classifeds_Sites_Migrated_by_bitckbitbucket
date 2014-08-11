@@ -3,12 +3,24 @@
 
 <?php
 if (!$searchCategory) {
-    echo $this->partial('partial/categorias/mulher-mulher', ['allDataCategory' =>$allDataCategory['mulheresprocurandomulheres']]);
-    echo $this->partial('partial/categorias/mulher-homem',['allDataCategory' =>$allDataCategory['mulheresprocurandohomens']]);
-    echo $this->partial('partial/categorias/homem-mulher',['allDataCategory' => $allDataCategory['homensprocurandomulheres']]);
-    echo $this->partial('partial/categorias/homem-homem',['allDataCategory' => $allDataCategory['homensprocurandohomens']]);
+    if($allDataCategory) {
+        echo $this->partial('partial/categorias/mulher-mulher', ['allDataCategory' =>$allDataCategory['mulheresprocurandomulheres']]);
+        echo $this->partial('partial/categorias/mulher-homem',['allDataCategory' =>$allDataCategory['mulheresprocurandohomens']]);
+        echo $this->partial('partial/categorias/homem-mulher',['allDataCategory' => $allDataCategory['homensprocurandomulheres']]);
+        echo $this->partial('partial/categorias/homem-homem',['allDataCategory' => $allDataCategory['homensprocurandohomens']]);
+        if(count($allDataCategory['mulheresprocurandomulheres']['sexs']) == 0 && count($allDataCategory['mulheresprocurandohomens']['sexs']) == 0 && count($allDataCategory['homensprocurandomulheres']['sexs']) == 0 && count($allDataCategory['homensprocurandohomens']['sexs']) == 0 ) {
+            echo 'Opssss :( Ainda não existem anúncios.';
+        }
+    } else {
+        echo 'Opssss :( Ainda não existem anúncios.';
+    }
+
 } else {
-    echo $this->partial('partial/categorias/geral', ['listOfSexs' => $listOfSexs,  'title' => $title, 'paginator' => $paginator,'type' => $type]);
+    if($listOfSexs) {
+        echo $this->partial('partial/categorias/geral', ['listOfSexs' => $listOfSexs,  'title' => $title, 'paginator' => $paginator,'type' => $type]);
+    } else {
+        echo 'Opssss :( Ainda não existem anúncios.';
+    }
 }?>
 </div>
 </div>

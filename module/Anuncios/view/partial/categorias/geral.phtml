@@ -15,5 +15,8 @@
     ?>
 </div>
 <?php else :?>
-    <?php echo 'Não existem resultados'; ?>
+    <?php echo 'Não existem resultados :('; ?>
+<?php endif;?>
+<?php if($this->paginator->count() == 0) :?>
+    <?php echo 'Não existem resultados :('; ?>
 <?php endif;?>
