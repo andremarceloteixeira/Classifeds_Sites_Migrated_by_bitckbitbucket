@@ -20,7 +20,7 @@ if(empty($image)) {
             </p>
             <p>
                 <?php if($sex->getSendemail() != 'NO'):?>
-                    <a class="btn btn-warning" href="<?php echo $this->url('contactar', array('action' => 'index', 'id' =>$sex->getId()));?>"> contactar <i class="icon-comment"></i></a>
+                    <a class="btn btn-warning" href="mailto:<?php echo $sex->getEmail();?>"><?php echo $sex->getEmail();?>"> contactar <i class="icon-comment"></i></a>
                 <?php endif;?>
                 <a class="btn" href="<?php echo $this->url('article', array('article' => $sex->getUrl())); ?>">ver informação</a>
             </p>
