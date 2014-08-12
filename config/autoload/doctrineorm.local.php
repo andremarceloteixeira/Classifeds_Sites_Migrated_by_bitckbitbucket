@@ -10,7 +10,7 @@ return array(
                     'host'     => 'localhost',
                     'port'     => '3306',
                     'user'     => 'root',
-                    'password' => 'root',
+                    'password' => 'marcelo', //marcelo live
                     'dbname'   => 'sexo',
 					'charset' => 'utf8', // extra
 					'driverOptions' => array(
