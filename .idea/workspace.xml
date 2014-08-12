@@ -8,7 +8,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/coolcsn/csn-user" afterPath="$PROJECT_DIR$/vendor/coolcsn/csn-user" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/mwillbanks/zfc-twitter-bootstrap" afterPath="$PROJECT_DIR$/vendor/mwillbanks/zfc-twitter-bootstrap" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/zendframework/zftool" afterPath="$PROJECT_DIR$/vendor/zendframework/zftool" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/autoload/doctrineorm.local.php" afterPath="$PROJECT_DIR$/config/autoload/doctrineorm.local.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="sexoja.com-local.iws" />
@@ -485,7 +484,11 @@
       <created>1407836656727</created>
       <updated>1407836656727</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Fixs">
+      <created>1407838714781</created>
+      <updated>1407838714781</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
