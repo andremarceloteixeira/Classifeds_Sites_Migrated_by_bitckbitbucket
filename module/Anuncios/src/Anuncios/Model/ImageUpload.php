@@ -114,8 +114,8 @@ class ImageUpload
         $im = imagecreatefrompng($imageSaved);
 
         // Set the margins for the stamp and get the height/width of the stamp image
-        $marge_right = 10;
-        $marge_bottom = 10;
+        $marge_right = 0;
+        $marge_bottom = 0;
         $sx = imagesx($stamp);
         $sy = imagesy($stamp);
 
