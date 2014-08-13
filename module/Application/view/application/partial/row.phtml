@@ -1,4 +1,8 @@
-<?php for($i = 0; $i < $lines ; $i++) :?>
+<?php
+if(count($nDestaques) ==1 ) {
+    $lines = 1;
+}
+for($i = 0; $i < $lines ; $i++) :?>
 <div class="item <?php echo $i==0 ? 'active' : ''?>">
     <div class="row">
         <?php foreach($nDestaques[$i]  as $anuncio) :
