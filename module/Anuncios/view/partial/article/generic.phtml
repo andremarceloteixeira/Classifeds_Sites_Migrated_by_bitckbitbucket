@@ -16,7 +16,7 @@ if(empty($image)) {
         <div class="caption">
             <h3><?php echo $sex->getTitle(); ?></h3>
             <p class="detailNprice">
-                <span><?php echo $this->page()->getDescription($sex->getDescription()); ?></span>
+                <span><?php echo strtoupper($this->page()->getDescription($sex->getDescription())); ?></span>
             </p>
             <p>
                 <?php if($sex->getSendemail() != 'NO'):?>
@@ -26,7 +26,7 @@ if(empty($image)) {
             </p>
         </div>
         <div class="cntr">
-            <p class="badge badge-inverse"><?php echo $this->page()->formatDate($sex->getCreated());?></p>
+            <p class="badge badge-inverse"><?php echo $this->page()->formatDate($sex->getUpaded());?></p>
         </div>
     </div>
 </li>

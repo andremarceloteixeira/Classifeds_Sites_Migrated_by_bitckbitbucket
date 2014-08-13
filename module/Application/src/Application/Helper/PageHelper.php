@@ -98,7 +98,7 @@ class PageHelper extends AbstractHelper
     }
 
 
-    public function getDescription($url, $chars = 30)
+    public function getDescription($url, $chars = 25)
     {
         if(strlen($url) <= $chars) {
             return substr($url, 0, $chars);

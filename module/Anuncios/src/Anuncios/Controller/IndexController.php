@@ -119,7 +119,7 @@ class IndexController extends BaseController
      */
     public function editAction()
     {
-        $id = $isEdit = $hash = false;
+        $created = $id = $isEdit = $hash = false;
         $title = 'CRIAR UM ANUNCIO GRATIS';
         $fkCidade = $fkCategoria = false;
         $anuncios = new Sex();
@@ -149,6 +149,7 @@ class IndexController extends BaseController
             $fkCidade = $anuncios->getCity()->getId();
             $fkCategoria = $anuncios->getCategory()->getId();
             $isEdit = $anuncios->getId();
+            $created = $anuncios->getCreated();
         }
         $form = new AnuncioForm($this->getEntityManager(), $isEdit);
         $form->bind($anuncios);
@@ -181,7 +182,7 @@ class IndexController extends BaseController
                             /**
                              * @var AnunciosModel
                              */
-                            $anuncios = $anunciosModel->setNewAnuncioData($anuncios, $postData);
+                            $anuncios = $anunciosModel->setNewAnuncioData($anuncios, $postData, $created);
                             if(!isset($formData['id'])) {
                                 $em->persist($anuncios);
                             } else {
@@ -193,24 +194,13 @@ class IndexController extends BaseController
                                         $em->flush();
                                     }
                                 }
-                                $anunciosObj  = $this->getEntityManager()->getRepository('Anuncios\Entity\Sex')->findOneBy(array('id' => $formData['id']));
-                                /**
-                                 * @var \Anuncios\Entity\Sex
-                                 */
-                                $anuncios->setExpiration($anunciosObj->getExpiration());
-                                $anuncios->setCreated($anunciosObj->getCreated());
-                                $anuncios->setUrl($anunciosObj->getUrl());
                                 $em->merge($anuncios);
                             }
                             $em->flush();
                             $anuncios->getId();
                             // para oferecer os Destaque as 11 primeiros para setar a primeira pagina
                             //Solução Linda!
-                            if (in_array($anuncios->getId(), [1,2,3])) {
-                                $anuncios->setType('DESTAQUE_GRANDE');
-                                $em->merge($anuncios);
-                                $em->flush();
-                            } elseif(in_array($anuncios->getId(), [4,5,6,7,8,9,10,11])) {
+                            if(in_array($anuncios->getId(), [8,9,10,11])) {
                                 $anuncios->setType('DESTAQUE_PEQUENO');
                                 $em->merge($anuncios);
                                 $em->flush();

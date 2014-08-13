@@ -25,7 +25,7 @@ class AnunciosModel extends  GenericModel
      * @param $postData
      * @return mixed
      */
-    public function setNewAnuncioData($anuncios, $postData)
+    public function setNewAnuncioData($anuncios, $postData, $createdAt = false )
     {
         $configModel = new Config();
         /**
@@ -42,6 +42,8 @@ class AnunciosModel extends  GenericModel
         if (isset($postData['id'])) {
             $anuncios->setId($postData['id']);
             $anuncios->setUpaded($configModel->getCurrentTime());
+            $anuncios->setExpiration($anuncios->getExpiration());
+            $anuncios->setCreated($createdAt);
         } else {
             $anuncios->setExpiration($configModel->generateExpirationDate());
             $anuncios->setCreated($configModel->getCurrentTime());

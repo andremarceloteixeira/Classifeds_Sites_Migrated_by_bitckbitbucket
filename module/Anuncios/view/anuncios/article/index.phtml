@@ -51,6 +51,9 @@
                 <li>Local : <?php echo $sex->getLocal()?></li>
                 <li>Categoria : <a href="<?php echo $this->url('anuncios', array('action' => 'index', 'category' => $sex->getCategory()->getId()));?>"><?php echo $sex->getCategory()->getName();?></a></li>
                 <li>Publicado em : <?php echo $this->page()->formatDate($sex->getCreated());?></li>
+                <?php if($sex->getCreated()->getTimestamp() !== $sex->getUpaded()->getTimestamp() ) { ?>
+                <li>Actualizado em : <?php echo $this->page()->formatDate($sex->getCreated());?></li>
+                <?php }?>
                 <li>Expira em : <?php echo $this->page()->formatDate($sex->getExpiration());?></li>
             </ul>
             <?php if($sex->getSendemail() != 'NO'):?>
@@ -66,7 +69,7 @@
     </div>
 </div>
 <div class="row">
-    <?php if(count($nDestaques)== 2 && count($nDestaques[0])==4 && count($nDestaques[1])==4) :?>
+    <?php if(count($nDestaques) >=  1) :?>
     <section id="featuredProduct">
         <h3 class="title"><span>Anúncios em destaque</span></h3>
         <div id="myCarouselOne" class="carousel slide">

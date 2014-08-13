@@ -1,12 +1,14 @@
-<?php if(count($top) >= 3) : ?>
+<?php
+$count = count($top);
+if( $count >= 1) : ?>
 <section id="mainCarousel">
     <div class="displayStyle">
         <div id="myCarousel" class="carousel slide">
             <span class="tagRight"></span>
             <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <?php for($i=0; $i < $count ; $i++) : ?>
+                <li data-target="#myCarousel" data-slide-to="<?php echo $i?>" class="<?php echo  $i===0 ? 'active' : '';?>"></li>
+                <?php endfor;?>
             </ol>
             <div class="carousel-inner">
                 <?php echo $this->partial('application/partial/big_row',['top' => $top]);?>
@@ -17,7 +19,7 @@
     </div>
 </section>
 <?php endif;?>
-<?php if(count($nDestaques)== 2 && count($nDestaques[0])==4 && count($nDestaques[1])==4) :?>
+<?php if(count($nDestaques) >= 1) :?>
 <section id="featuredProduct">
 <h3 class="title"><span>Anúncios em destaque</span></h3>
 <div id="myCarouselOne" class="carousel slide">
