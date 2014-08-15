@@ -72,7 +72,6 @@ class IndexController extends BaseController
         if (empty($city) && empty($category)) {
             $allDataCategory = $anunciosModel->getAllAnuniosByCategory();
         } else {
-            $repository = $this->getEntityManager()->getRepository('Anuncios\Entity\Sex');
             $adapter = new DoctrineAdapter(new ORMPaginator($listOfSexs));
             // Create the paginator itself
             $paginator = new Paginator($adapter);
@@ -197,14 +196,6 @@ class IndexController extends BaseController
                                 $em->merge($anuncios);
                             }
                             $em->flush();
-                            $anuncios->getId();
-                            // para oferecer os Destaque as 11 primeiros para setar a primeira pagina
-                            //Solução Linda!
-                            if(in_array($anuncios->getId(), [8,9,10,11])) {
-                                $anuncios->setType('DESTAQUE_PEQUENO');
-                                $em->merge($anuncios);
-                                $em->flush();
-                            }
                             $imagesForSave = $imageUpload->getImageNamesForSave();
                             if (!empty($imagesForSave)) {
                                 foreach($imagesForSave as $url) {
